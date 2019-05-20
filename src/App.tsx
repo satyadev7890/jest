@@ -1,26 +1,28 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Login from './pages/login';
+import Home from './pages/home';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import PrivateRoute from './pages/privateRoute';
+// import { PersistGate } from 'redux-persist/integration/react'
 
-class App extends Component {
+interface Props { };
+interface State { };
+
+class App extends React.Component<State, Props> {
+  constructor(props: Props) {
+    super(props);
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Provider store={store}>
+        <Router>
+          <PrivateRoute path="/" component={Home} />
+          <Route path="/login" component={Login} />
+        </Router>
+      </Provider>
     );
   }
 }
